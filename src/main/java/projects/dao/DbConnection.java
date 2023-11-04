@@ -1,6 +1,6 @@
 package projects.dao;
 
-import java.sql.Connection;  
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import projects.exception.DbException;
@@ -15,9 +15,9 @@ public class DbConnection {
 
 	public static Connection getConnection() {
 		String uri = String.format("jdbc:mysql://%s:%d/%s?user=%s&password=%s", HOST, PORT, SCHEMA, USER, PASSWORD);
-		
+
 		System.out.println("Connecting with url=" + uri);
-		
+
 		try {
 			Connection conn = DriverManager.getConnection(uri);
 			System.out.println("Connection to schema '" + SCHEMA + "' is successful.");
