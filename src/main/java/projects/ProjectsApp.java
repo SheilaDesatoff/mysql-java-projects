@@ -1,6 +1,6 @@
 package projects;
 
-import java.math.BigDecimal; 
+import java.math.BigDecimal;  
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -12,10 +12,13 @@ import projects.service.ProjectService;
 public class ProjectsApp {
 	private Scanner scanner = new Scanner(System.in);
 	private ProjectService projectService = new ProjectService();
+	private Project curProject;
 
 private List<String> operations = List.of( 
 // @formatter:off
-	"1) Add a project"
+	"1) Add a project",
+	"2) List projects",
+	"3) Select a project"
 	);
 // @formatter:on
 
@@ -38,6 +41,14 @@ private List<String> operations = List.of(
 	case 1:
 	createProject();
 	break;
+	
+	case 2:
+		listProjects();
+		break;
+		
+	case 3:
+		selectProject();
+		break;
 
 	default:
 	System.out.println("\n" + selection + " is not a valid selection. Try again.");
@@ -87,6 +98,7 @@ private List<String> operations = List.of(
 	}
 
 	private boolean exitMenu() {
+
 		System.out.println("Exiting the menu.");
 		return true;
 	}
@@ -124,10 +136,28 @@ private List<String> operations = List.of(
 		return input.isBlank() ? null : input.trim();
 	}
 
+	private void selectProject() {
+		listProjects();
+		Integer projectId = getIntInput("Enter a project ID to select a project");
+		curProject = null;
+		curProject = projectService.fetchProjectById(projectId);
+	}
+	
+	private void listProjects () {
+		List<Project> projects = projectService.fetchAllProjects();
+		System.out.println("\nProjects:");
+		projects.forEach(project -> System.out.println ("  " + project.getProjectId() + ": " + project.getProjectName()));
+		
+	}
+	
 	private void printOperations() {
 		System.out.println("\nThese are the available selections. Press the Enter key to quit:");
 
 		operations.forEach(line -> System.out.println(" " + line));
+		
+		if(Objects.isNull(curProject)) {
+			System.out.println("\nYou are working with project: " + curProject);
+		}
 
 	}
 }
