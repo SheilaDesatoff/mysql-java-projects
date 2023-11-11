@@ -156,8 +156,12 @@ private List<String> operations = List.of(
 		operations.forEach(line -> System.out.println(" " + line));
 		
 		if(Objects.isNull(curProject)) {
+			System.out.println("\nYou do not have an active project");
+			
+		} else {
 			System.out.println("\nYou are working with project: " + curProject);
 		}
+		
 
 	}
 }
